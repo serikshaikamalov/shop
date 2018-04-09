@@ -60,4 +60,13 @@ export class PagerService {
             pages: pages
         };
     }
+
+
+    /**
+     * @return page count
+     */
+    public getPagesCount(totalItems: number, pageSize: number = 10){
+        let totalPages = Math.ceil(totalItems / pageSize);
+        return totalPages;
+    }
 }

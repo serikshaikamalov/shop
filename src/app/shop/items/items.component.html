@@ -5,7 +5,8 @@
       <span>{{ header }}</span>
   </div>
 
-  <div class="block-content">          
+  <div class="block-content">    
+
     <!-- Loader -->
     <div class="lds-ripple" *ngIf="loading"><div></div><div></div></div>
 
@@ -42,7 +43,14 @@
 
 
     <!-- Pager -->
-    <div class="custom-pagination">
+    <div>
+        <p>Category: {{categoryId}}</p>
+        <p>Page Number: {{pageNumber}}</p>
+        <p>Total Count: {{ totalCount }}</p>
+        <p>Pages: {{this.pager.totalPages}}</p>
+        
+    </div>
+    <div class="custom-pagination" *ngIf="totalCount > 0">
         <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
             <li [ngClass]="{disabled:pager.currentPage === 1}">
                 <a (click)="setPage(1)">First</a>

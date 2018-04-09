@@ -2,7 +2,7 @@
             
   <!-- Header -->
   <div class="block-title">
-      <span>{{ header }}</span>
+      <span>{{ mode == 1 ? 'Создание товара' : mode == 2 ? 'Редактирование товара' : 'Просмотр товара' }}</span>
   </div>
 
   <div class="block-content">          
@@ -42,10 +42,11 @@
             <div class="form-group row">
                 <label class="col-sm-5">Цена</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" formControlName="Price" required>
+                    <input type="number" class="form-control" formControlName="Price" required>
 
                     <div class="" *ngIf="Price.errors && (Price.dirty || Price.touched)">
-                        <p *ngIf="Price.errors.required">Цена не установлена</p>                              
+                        <p *ngIf="Price.errors.required">Цена не установлена</p>      
+                        <p *ngIf="Price.errors.min">не менее 100 тенге</p>                        
                     </div>
                 </div>
             </div>
@@ -55,15 +56,21 @@
             <div class="form-group row">
                 <label class="col-sm-5">Количество</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" formControlName="Count" required>
+                    <input type="number" class="form-control" formControlName="Count" required>
 
                     <div class="" *ngIf="Count.errors && (Count.dirty || Count.touched)">
-                        <p *ngIf="Count.errors.required">Количество не установлено</p>                              
+                        <p *ngIf="Count.errors.required">Количество не установлено</p>          
+                        <p *ngIf="Count.errors.min">не менее 1 шт</p>                                  
+                                            
                     </div>
                 </div>
             </div>
             
         </form>    
+
+
+        <!-- Image Form -->
+        <app-upload-image></app-upload-image>
     </div>
     
 

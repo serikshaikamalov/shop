@@ -10,6 +10,7 @@ export class ShopService {
     @Output() change: EventEmitter<ICategory> = new EventEmitter();
     @Output() productListener: EventEmitter<number> = new EventEmitter();
     @Output() modeListener: EventEmitter<number> = new EventEmitter();
+    @Output() imageListener: EventEmitter<number> = new EventEmitter();
 
 
     // TRIGGER
@@ -27,5 +28,10 @@ export class ShopService {
 
     public sendMode( modeId: number ){
         this.modeListener.emit( modeId );
+    }
+
+
+    public sendImage( imageId: number ){
+        this.imageListener.emit(imageId);
     }
 }

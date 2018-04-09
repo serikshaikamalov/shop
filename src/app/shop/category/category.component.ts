@@ -20,6 +20,15 @@ export class CategoryComponent implements OnInit {
     public categoryList: ICategory[] = [];
     public selectedCategoryIds: ICategory[] = [];
 
+    public firstCategoryId: number;
+    public secondCategoryId: number;
+    public thirthCategoryId: number;
+
+    public firstLevelCategoryId: number = 0;
+    public secondLevelCategoryId: number = 0;
+    public thirthLevelCategoryId: number = 0;
+
+
     // Loader
     public loading: boolean = false;
     
@@ -29,16 +38,8 @@ export class CategoryComponent implements OnInit {
     ){}        
 
     ngOnInit() {
-        console.log('Component: Category Component');
-
-        //this.getCategories();        
-        this.loadCategories();
-
-        // Listener(Subscriber)
-        this.shopService.change.subscribe(category => {            
-            this.pushSelectedCategoryStorage( category );
-            this.isActive(category);
-        });
+        console.log('Component: Category Component');        
+        this.loadCategories();        
     }
 
 
@@ -59,166 +60,17 @@ export class CategoryComponent implements OnInit {
 
 
     /**
-     * Get Categories
-     * @returns void
-     */
-    public getCategories(): void{
-        this.loading = true;        
-
-        setTimeout(() =>{
-            this.loading = false;
-            this.categoryList.push(
-                {
-                    Id: 1,
-                    Title: 'Одежда',
-                    ParentId: 0,
-                    StatusId: 1,
-                    Level: 1,
-                    Children: [
-                        {
-                            Id: 2,
-                            Title: 'Мужская одежда',
-                            ParentId: 1,
-                            Level: 2,
-                            Children: [
-                                {
-                                    Id: 3,
-                                    Title: 'Верхная одежда',
-                                    Level: 3,                                    
-                                }
-                            ]
-                        },
-                        {
-                            Id: 4,
-                            Title: 'Женская одежда',
-                            ParentId: 1,
-                            Level: 2,                  
-                        }
-                    ]
-                },
-                {
-                    Id: 5,
-                    Title: 'Обувь',
-                    Level: 1,
-                    ParentId: 0,
-                    Children: [
-                        {
-                            Id: 7,
-                            Title: 'Мужские'
-                        },
-                        {
-                            Id: 8,
-                            Title: 'Женские'
-                        }
-                    ]
-                },
-                {
-                    Id: 6,
-                    Title: 'Другие',
-                    ParentId: 0,
-                    Level: 1,
-                    Children: [
-                        {
-                            Id: 9,
-                            Title: 'Часы'                    
-                        }
-                    ]
-                }
-            );
-
-            debugger;
-        }, 1000);
-
-        
-
-        
-    }
-
-    /**
      * TRIGGER
      */
     public changeCategory( category: ICategory ){
         console.log('Category: ', category);
-
-        this.categoryId = category.Id;
-        this.category = category;
         
-        // Store selected categories
-        this.pushSelectedCategoryStorage( category );
+        this.categoryId = category.Id;
+        this.category = category;                
         
 
         // Send to subscriber
         this.shopService.toggle( this.category );
-    }
-
-
-
-    public pushSelectedCategoryStorage( category: ICategory ){
-
-        if(this.selectedCategoryIds){            
-
-            // find level
-            debugger;
-            let index = this.selectedCategoryIds.findIndex(x => x.Level == category.Level);
-            if( index != -1 ){
-                // remove
-                this.selectedCategoryIds.splice(index, 1);
-                
-                // add new
-                this.selectedCategoryIds.push({
-                    Id: category.Id,
-                    Title: category.Title,
-                    Level: category.Level
-                })
-             }else{
-                // add new
-                this.selectedCategoryIds.push({
-                    Id: category.Id,
-                    Title: category.Title,
-                    Level: category.Level
-                })
-             }
-
-        }else{            
-        }
-    }
-
-
-    public isActive( category: ICategory ): boolean {
-        debugger;
-        let isActive: boolean = false;
-
-        if( !category ) return false;
-
-        if(this.selectedCategoryIds && this.selectedCategoryIds.length > 0){
-            if( this.selectedCategoryIds.findIndex( x => x.Id == category.Id && x.Level == category.Level ) != -1 ){
-                category.IsActive = true;
-                isActive = true;
-
-                //this.categoryList.filter( x => x.Id == category.Id ).shift().IsActive = true;
-
-                let object = this.getObject( this.categoryList, 'Id', category.Id );
-
-            }else{
-                category.IsActive = false;                
-            }
-        }
-
-        return isActive;
-    }
-
-
-    public getObject(array, key, value) {
-        var o;
-        array.some(function iter(a) {
-            if (a[key] === value) {
-                o = a;
-                return true;
-            }
-            return Array.isArray(a.Children) && a.Children.some(iter);
-        });
-        
-        return o;
     }
 
 }

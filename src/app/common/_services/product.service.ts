@@ -43,7 +43,8 @@ export class ProductService {
             Price: product.Price,
             Count: product.Count,
             CategoryId: product.CategoryId,
-            StatusId: product.StatusId
+            StatusId: product.StatusId,
+            ImageId: product.ImageId
         }).map((response: Response) => response.json());
     }
 

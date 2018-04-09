@@ -9,29 +9,54 @@
       
     <!-- Loader -->
     <div class="lds-ripple" *ngIf="loading"><div></div><div></div></div>
-
-      <!-- List -->
-      <!--<ul class="menu"  *ngIf="categoryList">
+      
+      <ul class="menu"  *ngIf="categoryList">
           <li *ngFor="let item of categoryList">                    
-            <a (click)="changeCategory(item)"
-                [ngClass]="{'active': item.IsActive}"
-            >
-              <b class="cc_child_btn" *ngIf="item.Children.length > 0"></b>
+            <a (click)="changeCategory(item); firstLevelCategoryId = item.Id; secondLevelCategoryId = 0; thirthLevelCategoryId = 0"
+                [ngClass]="{'active': firstLevelCategoryId == item.Id}"                
+                >
+                
+                <b class="cc_child_btn" *ngIf="item.Children.length > 0"></b>
               {{item.Title}}
             </a>
             
-            <ul class="menu">
+            <!-- Sub Menu -->
+            <ul class="menu" style="margin-left: 20px" [ngClass]="{'opened': item.Id == firstLevelCategoryId}">
                 <li *ngFor="let child of item.Children">
-                    <a>
+                    <a (click)="changeCategory(child); secondLevelCategoryId = child.Id; thirthLevelCategoryId=0"
+                       [ngClass]="{'active': secondLevelCategoryId == child.Id}"
+                    >
+                        <b class="cc_child_btn" *ngIf="child.Children?.length > 0"></b>
                         {{child.Title}}
                     </a>
+                        
+                    <!-- Submenu -->
+                    <ul class="menu" [ngClass]="{'opened': child.Id == secondLevelCategoryId}" >
+                        <li *ngFor="let subchild of child.Children">
+                            <a (click)="changeCategory(subchild); thirthLevelCategoryId = subchild.Id"
+                                [ngClass]="{'active': thirthLevelCategoryId == subchild.Id}"   
+                            >
+                                <b class="cc_child_btn" *ngIf="subchild.Children?.length > 0"></b>
+                                {{subchild.Title}}                                    
+                            </a>
+                        </li>
+                    </ul>
+                    
                 </li>
             </ul>
           </li>                                        
-      </ul>-->     
+      </ul>     
 
 
-    <ul class="menu" *ngIf="categoryList">
+      <!-- List -->
+      <div>
+          <div>Fisrt Level Category Id: {{firstLevelCategoryId}}</div>
+          <div>Second Level Category Id: {{secondLevelCategoryId}}</div>
+          <div>Thirth Level Category Id: {{thirthLevelCategoryId}}</div>
+      </div>
+
+
+    <!--<ul class="menu" *ngIf="categoryList">
         <li *ngFor="let item of categoryList; let i = index">
             <a (click)="changeCategory(item);"
                 [ngClass]="{'active': item.IsActive}"
@@ -41,7 +66,7 @@
             </a>            
             <recursive-list [item]="item" [level]="item.level"></recursive-list>
         </li>
-    </ul>
+    </ul>-->
 
 
   </div>            

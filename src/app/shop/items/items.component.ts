@@ -44,14 +44,18 @@ export class ItemsComponent implements OnInit {
         console.log('Component: Items Component');
         //this.getTotalCount();
         this.setPage( this.pageNumber );
-        
+
+        //this.loadData(this.pageNumber);         
 
         // Listener(Subscriber)
         this.ShopService.change.subscribe(category => {
+            debugger;
             this.categoryId = category.Id;  
             this.header = category.Title;  
             this.pageNumber = 1;       
             this.setPage( this.pageNumber );
+
+            //this.loadData(this.pageNumber);      
 
         });
     }   
@@ -61,10 +65,11 @@ export class ItemsComponent implements OnInit {
         this.loading = true;      
         await this.service
                 .getAll( page, this.categoryId )                
-                .subscribe(data => {                                                                       
+                .subscribe(data => {              
+                    debugger;                                                         
                     this.itemList = data;                        
                 },
-                () =>{}, 
+                ( error ) =>{ console.log("Error happened" + error) }, 
                 ()=>{
                     this.loading = false;
                 }
@@ -125,32 +130,53 @@ export class ItemsComponent implements OnInit {
     }
 
 
-    public async setPage(page: number) {
-        this.pageNumber = page;
-        
 
+    /**
+     * 1. Get Total Count of products
+     * 2. Create 
+     * @param page 
+     */
+    public async setPage(page: number) {
+                
         this.loading = true;
         await this.service
                 .getCount( this.categoryId )                
-                .subscribe(response => {  
-                    debugger;                                                                     
-                    this.totalCount = response;     
-                    if (this.pageNumber < 1 || this.pageNumber > this.totalCount) { return; }
+                .subscribe(
+                    response => {  
+                                                                                     
+                    this.totalCount = response;    
+                    
 
+                    // Get Page Count in pager
+                    let pageCount =  this.pagerService.getPagesCount(this.totalCount, 
+                                                                     this.limit)
+
+
+                    if (page < 1 || page > pageCount ) { return; }
+                    
+                    this.pageNumber = page; 
+                    
                     // get pager object from service
                     this.pager = this.pagerService.getPager(this.totalCount, 
                                                             this.pageNumber,
                                                             this.limit);         
 
                     // get current page of items        
-                    this.loadData(this.pageNumber); 
+                    this.loadData(this.pageNumber);                     
                 },
-                () =>{}, 
+                ( error ) =>{ console.log("Error happened" + error) }, 
                 ()=>{
-                    this.loading = false;
+                    debugger;
+                    this.loading = false;                    
                 }
-                );        
-    }
+            );
+
+            //this.loadData(this.pageNumber); 
+
+                   
+    
+    
+}
 
 
     /**
@@ -176,9 +202,11 @@ export class ItemsComponent implements OnInit {
 
 
     public delete(){
-        this.loading = true;
+        
         if(confirm("Are you sure to delete item?")) {
             console.log('Selected: Yes');
+            this.loading = true;
+            
             this.service.delete( this.productId ).subscribe(
                 ( response )=>{
                     

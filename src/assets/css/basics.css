@@ -69,17 +69,13 @@ ul.menu li a{
     cursor: pointer;
 }
 
-ul.menu li ul.menu > li > a{
-    padding-left: 50px;
-}
-
 ul.menu li a.active{
     font-weight: bold;
     color: #ec2228;
 }
 
 ul.menu li ul.menu{
-    /*display: none;*/
+    display: none;
 }
 
 ul.menu li ul.menu.opened{
@@ -87,7 +83,7 @@ ul.menu li ul.menu.opened{
 }
 
 ul.menu li .cc_child_btn,
-ul.menu.publication-menu > li .cc_child_btn{
+ul.menu  li .cc_child_btn{
     background: url( '../images/category_arrow.png') no-repeat scroll 4px -25px rgba(0, 0, 0, 0);
     cursor: pointer;
     height: 30px;
@@ -97,6 +93,9 @@ ul.menu.publication-menu > li .cc_child_btn{
     width: 30px;
 }
 
+ul.menu  li a.active .cc_child_btn{
+    background-position: 2px 4px;
+}
 
 /*### Offsets ###*/
 .offset-top-10{

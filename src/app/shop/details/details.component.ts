@@ -159,6 +159,16 @@ export class DetailsComponent implements OnInit {
                 
             }
         );        
+
+
+        // Image Subscriber
+        this.shopService.imageListener.subscribe(            
+            ( imageId: number ) => {           
+                debugger;     
+                this.product.ImageId = imageId;                                                  
+            }                
+        );  
+        
     }   
 
     public createFormControls(){
@@ -169,11 +179,15 @@ export class DetailsComponent implements OnInit {
 
 
         this.Price = new FormControl(this.product.Price, [ 
-            Validators.required            
+            Validators.required,
+            Validators.min(100),
+            Validators.max(10000000),            
         ]);
 
         this.Count = new FormControl(this.product.Count,[
-            Validators.required
+            Validators.required,
+            Validators.min(1),
+            Validators.max(1000),  
         ]);
     }
 
@@ -254,6 +268,7 @@ export class DetailsComponent implements OnInit {
                 Count: this.myform.controls['Count'].value,
                 CategoryId: 1,
                 StatusId: 1,
+                ImageId: this.product.ImageId
             }
 
             await this.service
@@ -310,5 +325,20 @@ export class DetailsComponent implements OnInit {
 
     public isFormValid(): boolean{
         return (this.myform.status == 'VALID') ? true : false;        
+    }
+
+    public getHeader(){
+        switch(this.mode ){
+            default:
+            case mode.isNew:
+                this.header = 'Новый товар';
+                break;
+            case mode.edit:
+                this.header = 'Редактирование товара';
+                break;
+            case mode.view:
+                this.header = 'Просмотр товара';
+                break;
+        }
     }
 }
