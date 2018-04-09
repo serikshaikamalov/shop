@@ -17,7 +17,7 @@
                 >
                 
                 <b class="cc_child_btn" *ngIf="item.Children.length > 0"></b>
-              {{item.Title}}
+                {{item.Title}}
             </a>
             
             <!-- Sub Menu -->
@@ -31,7 +31,7 @@
                     </a>
                         
                     <!-- Submenu -->
-                    <ul class="menu" [ngClass]="{'opened': child.Id == secondLevelCategoryId}" >
+                    <ul class="menu" style="margin-left: 20px" [ngClass]="{'opened': child.Id == secondLevelCategoryId}" >
                         <li *ngFor="let subchild of child.Children">
                             <a (click)="changeCategory(subchild); thirthLevelCategoryId = subchild.Id"
                                 [ngClass]="{'active': thirthLevelCategoryId == subchild.Id}"   

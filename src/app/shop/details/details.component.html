@@ -60,7 +60,8 @@
 
                     <div class="" *ngIf="Count.errors && (Count.dirty || Count.touched)">
                         <p *ngIf="Count.errors.required">Количество не установлено</p>          
-                        <p *ngIf="Count.errors.min">не менее 1 шт</p>                                  
+                        <p *ngIf="Count.errors.min">не менее 1 шт</p> 
+                        <p *ngIf="Count.errors.max">не более 1000 шт</p>                                  
                                             
                     </div>
                 </div>

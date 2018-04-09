@@ -143,26 +143,33 @@ export class ItemsComponent implements OnInit {
                 .getCount( this.categoryId )                
                 .subscribe(
                     response => {  
-                                                                                     
+                        debugger;
+                    
                     this.totalCount = response;    
+                    if( this.totalCount > 0 ){
+                        // Get Page Count in pager
+                        let pageCount =  this.pagerService.getPagesCount(this.totalCount, 
+                                                                        this.limit)
+
+
+                        if (page < 1 || page > pageCount ) { return; }
+                        
+                        this.pageNumber = page; 
+                        
+                        // get pager object from service
+                        this.pager = this.pagerService.getPager(this.totalCount, 
+                                                                this.pageNumber,
+                                                                this.limit);         
+
+                        // get current page of items        
+                        this.loadData(this.pageNumber); 
+                    }else{
+                        this.itemList = [];
+                    }                                                               
+                    
                     
 
-                    // Get Page Count in pager
-                    let pageCount =  this.pagerService.getPagesCount(this.totalCount, 
-                                                                     this.limit)
-
-
-                    if (page < 1 || page > pageCount ) { return; }
-                    
-                    this.pageNumber = page; 
-                    
-                    // get pager object from service
-                    this.pager = this.pagerService.getPager(this.totalCount, 
-                                                            this.pageNumber,
-                                                            this.limit);         
-
-                    // get current page of items        
-                    this.loadData(this.pageNumber);                     
+                                        
                 },
                 ( error ) =>{ console.log("Error happened" + error) }, 
                 ()=>{
