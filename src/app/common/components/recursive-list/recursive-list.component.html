@@ -1,0 +1,11 @@
+<ul class="menu" *ngIf="item.Children" [ngStyle]="{'margin-left': offsetLeft + 'px'}">
+    <li *ngFor="let item of item.Children; let i = index">
+        <a (click)="changeCategory(item)"
+           [ngClass]="{'active': item.IsActive}"
+        >
+            <b class="cc_child_btn" *ngIf="item.Children?.length > 0"></b>
+            {{item.Title}}
+        </a>
+        <recursive-list [item]="item" [level]="level"></recursive-list>
+    </li>
+</ul>

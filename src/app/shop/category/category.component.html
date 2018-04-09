@@ -1,0 +1,48 @@
+<section class="block">
+            
+  <!-- Header -->
+  <div class="block-title">
+      <span>Список категорий</span>
+  </div>
+
+  <div class="block-content">
+      
+    <!-- Loader -->
+    <div class="lds-ripple" *ngIf="loading"><div></div><div></div></div>
+
+      <!-- List -->
+      <!--<ul class="menu"  *ngIf="categoryList">
+          <li *ngFor="let item of categoryList">                    
+            <a (click)="changeCategory(item)"
+                [ngClass]="{'active': item.IsActive}"
+            >
+              <b class="cc_child_btn" *ngIf="item.Children.length > 0"></b>
+              {{item.Title}}
+            </a>
+            
+            <ul class="menu">
+                <li *ngFor="let child of item.Children">
+                    <a>
+                        {{child.Title}}
+                    </a>
+                </li>
+            </ul>
+          </li>                                        
+      </ul>-->     
+
+
+    <ul class="menu" *ngIf="categoryList">
+        <li *ngFor="let item of categoryList; let i = index">
+            <a (click)="changeCategory(item);"
+                [ngClass]="{'active': item.IsActive}"
+            >
+              <b class="cc_child_btn" *ngIf="item.Children.length > 0"></b>
+              {{item.Title}}
+            </a>            
+            <recursive-list [item]="item" [level]="item.level"></recursive-list>
+        </li>
+    </ul>
+
+
+  </div>            
+</section>

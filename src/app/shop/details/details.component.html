@@ -1,0 +1,71 @@
+<section class="block">
+            
+  <!-- Header -->
+  <div class="block-title">
+      <span>{{ header }}</span>
+  </div>
+
+  <div class="block-content">          
+    <!-- Loader -->
+    <div class="lds-ripple" *ngIf="loading"><div></div><div></div></div>
+
+    <!-- List -->
+    <!-- Operations -->
+    <div class="operations" *ngIf="loading == false">
+        <button class="btn btn-primary" (click)="save()" [disabled]="!isFormValid()">Сохранить</button>
+        <button class="btn btn-primary" (click)="cancel()">Отменить</button>
+    </div>
+
+    <div>
+        Mode: {{mode}}
+    </div>
+
+    <!-- Form -->        
+    <div class="offset-top-20">
+        <form *ngIf="loading == false" [formGroup]="myform">
+        
+            <!-- Title -->
+            <div class="form-group row" >
+                <label class="col-sm-5">Наименование</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" formControlName="Title" required>    
+                    
+                    <div *ngIf="Title.errors && (Title.dirty || Title.touched)">
+                        <p *ngIf="Title.errors.required">Наименование не установлена</p>      
+                        <p *ngIf="Title.errors.minlength">не менее 5 символов</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Price -->
+            <div class="form-group row">
+                <label class="col-sm-5">Цена</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" formControlName="Price" required>
+
+                    <div class="" *ngIf="Price.errors && (Price.dirty || Price.touched)">
+                        <p *ngIf="Price.errors.required">Цена не установлена</p>                              
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Count -->
+            <div class="form-group row">
+                <label class="col-sm-5">Количество</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" formControlName="Count" required>
+
+                    <div class="" *ngIf="Count.errors && (Count.dirty || Count.touched)">
+                        <p *ngIf="Count.errors.required">Количество не установлено</p>                              
+                    </div>
+                </div>
+            </div>
+            
+        </form>    
+    </div>
+    
+
+  </div>            
+</section>

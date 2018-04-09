@@ -1,0 +1,68 @@
+<section class="block">
+            
+  <!-- Header -->
+  <div class="block-title">
+      <span>{{ header }}</span>
+  </div>
+
+  <div class="block-content">          
+    <!-- Loader -->
+    <div class="lds-ripple" *ngIf="loading"><div></div><div></div></div>
+
+    <!-- List -->
+    <!-- Operations -->
+    <div class="operations" *ngIf="itemList.length > 0">
+        <button class="btn btn-primary" (click)="addNew()">Добавить</button>
+        <button class="btn btn-primary" (click)="delete()">Удалить</button>
+    </div>
+
+    <!-- Items -->    
+    <div class="items offset-top-30">
+        <table class="table table-bordered" *ngIf="itemList.length > 0">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">#</th>                
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of itemList; let i = index" (click)="selectProduct(item.Id)" [ngClass]="{'success': productId == item.Id}">
+                    <th scope="row"> {{ i + 1 }}</th>
+                    <th scope="col">
+                        <input type="checkbox" multiple (change)="onCheckChange($event)" [value]="item.Id">
+                    </th>        
+                    <td>{{ item.Title }}</td>
+                    <td>{{ item.Price }}</td>                    
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Pager -->
+    <div class="custom-pagination">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(1)">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.currentPage + 1)">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="setPage(pager.totalPages)">Last</a>
+            </li>
+        </ul>
+    </div>
+    
+
+
+  </div>            
+</section>

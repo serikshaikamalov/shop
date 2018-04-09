@@ -1,0 +1,3 @@
+:host .items{ min-height: 150px; }
+:host .lds-ripple{ top: 100px; left: 200px; }
+:host .custom-pagination{ text-align: center }
