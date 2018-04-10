@@ -1,3 +1,9 @@
+<p align="center">
+  <img height="200px" width="200px" style="text-align: center;" src="https://cdn.rawgit.com/MurhafSousli/ngx-sharebuttons/master/assets/logo.svg">
+  <h1 align="center">Angular Share Buttons</h1>
+  <p align="center"><img src="https://image.ibb.co/eY16JG/buttons.png" alt="Capture" border="0"></p>
+</p>
+
 # Shop.Local
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
