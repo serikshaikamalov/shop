@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="200px" width="200px" style="text-align: center;" src="https://github.com/serikshaikamalov/shop/blob/master/src/assets/images/category_arrow.png">
+  <img height="200px" width="200px" style="text-align: center;" src="https://github.com/serikshaikamalov/shop/blob/master/src/assets/images/Shop_01.PNG">
   <h1 align="center">Online Shop SPA Application</h1>  
 </p>
 
